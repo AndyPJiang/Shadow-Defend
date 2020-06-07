@@ -1,5 +1,5 @@
 1,spawn,20,slicer,1000
-2,spawn,5,slicer,1000
+1,spawn,5,slicer,1000
 2,delay,2500
 2,spawn,20,slicer,750
 3,spawn,5,superslicer,1000
@@ -14,6 +14,7 @@
 6,delay,5000
 6,spawn,3,apexslicer,3000
 6,spawn,3,apexslicer,3000
+6,spawn 5 apex slicer,5000
 7,spawn,20,superslicer,250
 7,delay,1750
 7,spawn,10,megaslicer,2000
