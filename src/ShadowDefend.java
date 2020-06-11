@@ -5,10 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.lang.String;
 
+/**
+ * ShadowDefend, a tower defence game.
+ */
 public class ShadowDefend extends AbstractGame {
-
     private static final int HEIGHT = 768;
     private static final int WIDTH = 1024;
+    private static final String IMG_PATH = "res/images/";
+    private static final String MAP_PATH = "res/levels/";
+    private static final String FONT_PATH = "res/fonts/";
     private static final double INIT_TIMESCALE = 1;
     private static final double MAX_TIMESCALE = 20;
     private static final int INIT_MONEY = 500;
@@ -31,11 +36,6 @@ public class ShadowDefend extends AbstractGame {
     private static final List<Slicer> slicers = new ArrayList<>();
     private static final List<Tower> towers = new ArrayList<>();
 
-    private final Wave wave;
-    private final StatusPanel statusPanel;
-    private final BuyPanel buyPanel;
-    private BuyTower buyTower;
-
     private static TiledMap map;
     private static List<Point> polyline;
 
@@ -43,9 +43,16 @@ public class ShadowDefend extends AbstractGame {
     private static final int superTankPrice = 600;
     private static final int airplanePrice = 500;
 
+    private final Wave wave;
+    private final StatusPanel statusPanel;
+    private final BuyPanel buyPanel;
+    private BuyTower buyTower;
+    /**
+     * Creates a new instance of the ShadowDefend game
+     */
     public ShadowDefend() {
         super(WIDTH, HEIGHT, "ShadowDefend");
-        map = new TiledMap("res/levels/"+level+".tmx");
+        map = new TiledMap(MAP_PATH+level+".tmx");
         polyline = map.getAllPolylines().get(0);
         this.wave = Wave.getInstance();
         this.statusPanel = StatusPanel.getInstance();
@@ -53,25 +60,21 @@ public class ShadowDefend extends AbstractGame {
         status.add(INIT_STATUS);
     }
 
+    /**
+     * The entry-point for the game
+     *
+     * @param args Optional command-line arguments
+     */
     public static void main(String[] args) throws Exception {
         new ShadowDefend().run();
     }
 
-    public static int getWaveNum() {
-        return waveNum;
-    }
-    public static int getTankPrice() {
-        return tankPrice;
-    }
 
-    public static int getSuperTankPrice() {
-        return superTankPrice;
-    }
-
-    public static int getAirplanePrice() {
-        return airplanePrice;
-    }
-
+    /**
+     * add new slicers to the game
+     * @param slicerType the type of slicer to spawn
+     * @param num the number of slicers to spawn
+     */
     public static void addSlicer(String slicerType, int num){
         if (slicerType.equals("slicer")){
             for (int i=0;i<num;i++){
@@ -91,48 +94,46 @@ public class ShadowDefend extends AbstractGame {
             }
         }
     }
+
+    /**
+     * add new slicers to the game
+     * @param newSlicers a list a slicers to add
+     */
     public static void addSlicer(List<Slicer> newSlicers){
-        for (Slicer s : newSlicers){
-            slicers.add(s);
-        }
+        slicers.addAll(newSlicers);
     }
+
+    /**
+     * add a new tower to the game
+     * @param towerType the type of tower to add
+     * @param p the position to place the tower at
+     */
     public static void addTower(String towerType, Point p){
         if (towerType.equals("tank")){
-            towers.add(new Tank(p));
+            towers.add(new Tank(p,"tank",100,1,1));
             addMoney(-tankPrice);
         }else if (towerType.equals("supertank")){
-            towers.add(new SuperTank(p));
+            towers.add(new Tank(p,"supertank",150,0.5,3));
             addMoney(-superTankPrice);
         }else{
             if (airplaneIsVertical){
-                towers.add(new Airplane(new Point(p.x,0),airplaneIsVertical));
+                towers.add(new Airplane(new Point(p.x,0),true));
             }else{
-                towers.add(new Airplane(new Point(0,p.y),airplaneIsVertical));
+                towers.add(new Airplane(new Point(0,p.y),false));
             }
             airplaneIsVertical = !airplaneIsVertical;
             addMoney(-airplanePrice);
         }
     }
 
-    public static List<Point> getPolyline() {
-        return polyline;
-    }
-    public static int getLives() {
-        return lives;
-    }
 
-    public static void setLives(int lives) {
-        ShadowDefend.lives = lives;
-    }
-
-    public static String getStatus() {
-        return status.get(status.size()-1);
-    }
-
+    /**
+     * reset the game state after wave has finished
+     */
     private void resetGame(){
         level++;
         try{
-            map = new TiledMap("res/levels/"+level+".tmx");
+            map = new TiledMap(MAP_PATH+level+".tmx");
             polyline = map.getAllPolylines().get(0);
             towers.clear();
             slicers.clear();
@@ -142,12 +143,98 @@ public class ShadowDefend extends AbstractGame {
             lives = INIT_LIVES;
             timescale = INIT_TIMESCALE;
             waveNum = INIT_WAVENUM;
+            airplaneIsVertical = false;
         }
         catch (Exception e){
             status.add("Winner!");
         }
     }
+    /**
+     * Return current wave number
+     */
+    public static int getWaveNum() {
+        return waveNum;
+    }
+    /**
+     * Return the price of a tank
+     */
+    public static int getTankPrice() {
+        return tankPrice;
+    }
+    /**
+     * Return the price of a supertank
+     */
+    public static int getSuperTankPrice() {
+        return superTankPrice;
+    }
+    /**
+     * Return the price of airsupport
+     */
+    public static int getAirplanePrice() {
+        return airplanePrice;
+    }
 
+    /**
+     * Return the number of lives
+     */
+    public static int getLives() {
+        return lives;
+    }
+
+    /**
+     * Return the current game status
+     */
+    public static String getStatus() {
+        return status.get(status.size()-1);
+    }
+
+    /**
+     * Return the frames per second
+     */
+    public static double getFPS() {
+        return FPS;
+    }
+
+    /**
+     * Update the current wave number
+     * @param num new wave number
+     */
+    public static void setWaveNum(int num){
+        waveNum = num;
+    }
+
+    /**
+     * Update money
+     * @param mon amount of money to add
+     */
+    public static void addMoney(int mon) {
+        money += mon;
+    }
+
+    /**
+     * Return current amount of money left
+     */
+    public static int getMoney() {
+        return money;
+    }
+
+    /**
+     * Return the array of towers currently in game
+     */
+    public static List<Tower> getTowers() {
+        return towers;
+    }
+
+    /**
+     * Return the array of slicers currently in game
+     */
+    public static List<Slicer> getSlicers() {
+        return slicers;
+    }
+
+    /**
+     * Return the timescale
+     */
     public static double getTimescale() {
         return timescale;
     }
@@ -160,38 +247,56 @@ public class ShadowDefend extends AbstractGame {
             timescale++;
         }
     }
+    /**
+     * Decrease the timescale
+     */
     private void decreaseTimescale() {
         if (timescale > INIT_TIMESCALE) {
             timescale--;
         }
     }
-    public static double getFPS() {
-        return FPS;
+
+    /**
+     * Return the path to the directory of images
+     */
+    public static String getImgPath() {
+        return IMG_PATH;
     }
 
-    public static void setWaveNum(int num){
-        waveNum = num;
+    /**
+     * Return the path to the directory of maps
+     */
+    public static String getMapPath() {
+        return MAP_PATH;
     }
 
-    public static void addMoney(int mon) {
-        money += mon;
+    /**
+     * Return the path to the directory of fonts
+     */
+    public static String getFontPath() {
+        return FONT_PATH;
     }
 
-    public static int getMoney() {
-        return money;
+    /**
+     * Return window height
+     */
+    public static int getHeight() {
+        return HEIGHT;
     }
 
-    private static void getBlockedTiles(){
+    /**
+     * Return window width
+     */
+    public static int getWidth() {
+        return WIDTH;
     }
 
-    public static List<Tower> getTowers() {
-        return towers;
-    }
 
-    public static List<Slicer> getSlicers() {
-        return slicers;
-    }
-
+    /**
+     * Update the state of the game, potentially reading from input
+     *
+     * @param input The current mouse/keyboard state
+     */
     @Override
     protected void update(Input input) {
         map.draw(0,0,0,0,WIDTH,HEIGHT);
@@ -229,7 +334,7 @@ public class ShadowDefend extends AbstractGame {
             buyTower.followMouse(input);
         }
 
-        this.wave.progressWave();
+        wave.progressWave();
 
         for (int i=towers.size()-1;i>=0;i--){
             Tower t = towers.get(i);
@@ -254,15 +359,17 @@ public class ShadowDefend extends AbstractGame {
             if (wave.getIsFinished() && slicers.isEmpty()){
                 ShadowDefend.addMoney(150+waveNum*100);
                 hasStarted = false;
-                status.remove(status.size()-1);
+                if (isBuying){
+                    status.remove(status.size()-2);
+                }else{
+                    status.remove(status.size()-1);
+                }
                 if (wave.getIsWaveFinished()){
                     resetGame();
                 }
             }
         }
-
         buyPanel.renderPanel();
         statusPanel.renderPanel();
-
     }
 }

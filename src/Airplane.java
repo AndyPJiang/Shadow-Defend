@@ -5,21 +5,20 @@ import bagel.util.Vector2;
 import java.util.List;
 
 public class Airplane extends Tower{
-    private final double speed = 3;
+    private final double SPEED = 3;
     private double dropTime;
-    private boolean isVertical;
+    private final boolean isVertical;
     private double frameCount = 0.0;
-    private final String explosiveFile = "res/images/explosive.png";
     private final double windowWidth;
     private final double windowHeight;
 
     public Airplane(Point p,boolean isVertical){
-        super(p,"res/images/airsupport.png",
+        super(p,ShadowDefend.getImgPath()+"airsupport.png",
                 200,500,"airsupport");
         dropTime = Math.random() * 3;
         this.isVertical = isVertical;
-        windowWidth = Window.getWidth();
-        windowHeight = Window.getHeight();
+        windowWidth = ShadowDefend.getWidth();
+        windowHeight = ShadowDefend.getHeight();
     }
 
     public void attack(Input input){
@@ -43,10 +42,10 @@ public class Airplane extends Tower{
     public void render(Input input){
         Vector2 dx;
         if (isVertical){
-            dx = new Vector2(0,speed * ShadowDefend.getTimescale());
+            dx = new Vector2(0,SPEED * ShadowDefend.getTimescale());
             super.setAngle(Math.PI);
         }else{
-            dx = new Vector2(speed * ShadowDefend.getTimescale(),0);
+            dx = new Vector2(SPEED * ShadowDefend.getTimescale(),0);
             super.setAngle(Math.PI/2);
         }
         super.move(dx);
@@ -55,7 +54,6 @@ public class Airplane extends Tower{
         List<Projectile> projectiles = getProjectiles();
         if (!airplaneInRange() && projectiles.isEmpty()){
             setHasFinished(true);
-            System.out.println("finished");
         }
     }
 }

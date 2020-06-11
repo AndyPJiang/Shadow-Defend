@@ -3,7 +3,7 @@ import bagel.util.Colour;
 import bagel.util.Point;
 import bagel.util.Rectangle;
 
-public class BuyPanel{
+public class BuyPanel implements Panel{
     private static BuyPanel buyPanel = null;
     private final Image background;
     private final Image tankImg;
@@ -14,12 +14,12 @@ public class BuyPanel{
     private final double center;
     private final double width;
 
-    private final int offsetX = 64;
-    private final int offsetY = 10;
-    private final int offsetKeyBind = 25;
-    private final int offsetMoney = 200;
-    private final int offsetYMoney = 65;
-    private final int gap = 120;
+    private final int OFFSET_X = 64;
+    private final int OFFSET_Y = 10;
+    private final int OFFSET_KEYBIND = 25;
+    private final int OFFSET_MONEY = 200;
+    private final int OFFSET_Y_MONEY = 65;
+    private final int GAP = 120;
 
     private final Point tankCenter;
     private final Point superTankCenter;
@@ -31,22 +31,24 @@ public class BuyPanel{
 
 
     private BuyPanel(){
-        this.background = new Image("res/images/buypanel.png");
-        this.tankImg = new Image("res/images/tank.png");
-        this.superTankImg = new Image("res/images/supertank.png");
-        this.airplaneImg = new Image("res/images/airsupport.png");
+        String imgPath = ShadowDefend.getImgPath();
+        this.background = new Image(imgPath+"buypanel.png");
+        this.tankImg = new Image(imgPath+"tank.png");
+        this.superTankImg = new Image(imgPath+"supertank.png");
+        this.airplaneImg = new Image(imgPath+"airsupport.png");
         center = background.getHeight()/2;
         width = background.getWidth();
-        tankCenter = new Point(offsetX,center-offsetY);
-        superTankCenter = new Point(offsetX+gap,center-offsetY);
-        airplaneCenter= new Point(offsetX + 2 * gap,center- offsetY);
+        tankCenter = new Point(OFFSET_X,center-OFFSET_Y);
+        superTankCenter = new Point(OFFSET_X+GAP,center-OFFSET_Y);
+        airplaneCenter= new Point(OFFSET_X + 2 * GAP,center- OFFSET_Y);
         this.tankPrice = ShadowDefend.getTankPrice();
         this.superTankPrice = ShadowDefend.getSuperTankPrice();
         this.airplanePrice = ShadowDefend.getAirplanePrice();
     }
 
     public void renderPanel(){
-        Font font = new Font("res/fonts/DejaVuSans-Bold.ttf",25);
+        String fontPath = ShadowDefend.getFontPath();
+        Font font = new Font(fontPath+"DejaVuSans-Bold.ttf",mediumSize);
 
         double tankWidth = tankImg.getWidth();
         double superTankWidth = superTankImg.getWidth();
@@ -79,16 +81,17 @@ public class BuyPanel{
                     airplaneCenter.y+50,drawOptions.setBlendColour(Colour.RED));
         }
 
-        Font fontKeyBind = new Font("res/fonts/DejaVuSans-Bold.ttf",15);
+        Font fontKeyBind = new Font(fontPath+"DejaVuSans-Bold.ttf",smallSize);
         fontKeyBind.drawString(
                 "Key binds:\n\nS - Start Wave\nL - Increase Timescale\nK - Decrease Timescale",
-                width/2-fontKeyBind.getWidth("Key binds"), center-offsetKeyBind);
+                width/2-fontKeyBind.getWidth("Key binds"), center-OFFSET_KEYBIND);
 
 
-        Font fontMoney = new Font("res/fonts/DejaVuSans-Bold.ttf",50);
+        Font fontMoney = new Font(fontPath+"DejaVuSans-Bold.ttf",largeSize);
         fontMoney.drawString("$"+ShadowDefend.getMoney(),
-                width-offsetMoney, offsetYMoney);
+                width-OFFSET_MONEY, OFFSET_Y_MONEY);
     }
+
 
     public String getTowerType(Input input){
         Point p = input.getMousePosition();
@@ -105,7 +108,6 @@ public class BuyPanel{
             return ShadowDefend.getMoney()>=airplanePrice ? "airsupport" : "";
         }
         return "";
-
     }
 
     public Image getBackground() {

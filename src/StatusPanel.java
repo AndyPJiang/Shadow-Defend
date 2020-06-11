@@ -1,28 +1,24 @@
 import bagel.*;
 import bagel.util.Colour;
 
-public class StatusPanel{
+public class StatusPanel implements Panel{
 
     private static StatusPanel statusPanel;
     private final Image background;
     private final DrawOptions drawOptions = new DrawOptions();
 
     private StatusPanel(){
-        this.background = new Image("res/images/statuspanel.png");
-    }
-
-    public Image getBackground() {
-        return background;
+        this.background = new Image(ShadowDefend.getImgPath()+"statuspanel.png");
     }
 
     public void renderPanel(){
-        Font font = new Font("res/fonts/DejaVuSans-Bold.ttf",15);
+        Font font = new Font(ShadowDefend.getFontPath()+"DejaVuSans-Bold.ttf",smallSize);
 
-        double windowHeight = Window.getHeight();
+        double windowHeight = ShadowDefend.getHeight();
         double height = background.getHeight();
         double width = background.getWidth();
         double offsetY = Window.getHeight()-background.getHeight()/3;
-        int offsetX = 20;
+        double offsetX = 20;
 
         int waveNum = ShadowDefend.getWaveNum();
         double timescale = ShadowDefend.getTimescale();
@@ -45,6 +41,11 @@ public class StatusPanel{
 
         font.drawString("Lives: "+lives,
                 width-font.getWidth("Lives: "+lives)-offsetX, offsetY);
+    }
+
+
+    public Image getBackground() {
+        return background;
     }
 
     public static StatusPanel getInstance(){

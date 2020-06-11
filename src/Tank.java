@@ -1,15 +1,16 @@
 import bagel.*;
 import bagel.util.Point;
-import bagel.util.Vector2;
 import java.util.List;
 
 public class Tank extends Tower{
     private final double coolDown;
     private double frameCount = Integer.MAX_VALUE;
-    private final String projectileFile = "res/images/tank_projectile.png";
-    public Tank(Point p){
-        super(p,"res/images/tank.png",100,1,"tank");
-        this.coolDown = 1.0;
+    private final String projectileFile;
+
+    public Tank(Point p,String name,int radius, double coolDown, int damage){
+        super(p,ShadowDefend.getImgPath()+name+".png",radius,damage,name);
+        projectileFile = ShadowDefend.getImgPath()+name+"_projectile.png";
+        this.coolDown = coolDown;
     }
 
     public void attack(Input input){

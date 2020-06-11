@@ -41,10 +41,6 @@ public abstract class Tower extends Sprite{
     public List<Projectile> getProjectiles() {
         return projectiles;
     }
-
-    public String getName() {
-        return name;
-    }
     public void render(Input input){
         super.update(input);
     }

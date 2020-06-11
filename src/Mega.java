@@ -1,15 +1,18 @@
 import bagel.util.Point;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Mega extends Slicer{
 
     public Mega(List<Point> polyline){
-        super(polyline,1.5,2,10,4,"res/images/megaslicer.png");
+        super(polyline,1.5,2,10,4,
+                ShadowDefend.getImgPath()+"megaslicer.png");
     }
+
     public Mega(List<Point> polyline,Point start, int targetInd){
-        super(polyline,1.5,2,10,4,"res/images/megaslicer.png",start);
+        super(polyline,1.5,2,10,4,
+                ShadowDefend.getImgPath()+"megaslicer.png",start);
+
         this.setTargetInd(targetInd);
     }
     public void spawnOnDeath(){

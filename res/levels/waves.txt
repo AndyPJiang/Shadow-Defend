@@ -20,3 +20,4 @@
 7,spawn,10,megaslicer,2000
 7,delay,500
 7,spawn,5,apexslicer,1500
+7,spawn,10,apexslicer,3000

@@ -19,11 +19,11 @@ public class SpawnEvent extends Event{
             hasStarted = true;
             spawnNum++;
         }
-        if (!this.getIsFinished()){
-            this.increaseFrameCount(ShadowDefend.getTimescale());
-            if (this.getFrameCount()/ShadowDefend.getFPS()>=this.getDelay()){
+        if (!getIsFinished()){
+            increaseFrameCount(ShadowDefend.getTimescale());
+            if (getFrameCount()/ShadowDefend.getFPS() >= getDelay()){
                 ShadowDefend.addSlicer(enemyType,1);
-                this.setFrameCount(0.0);
+                setFrameCount(0.0);
                 spawnNum++;
                 if (spawnNum>=totalSpawnNum){
                     this.setIsFinished(true);

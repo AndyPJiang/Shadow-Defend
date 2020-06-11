@@ -6,10 +6,12 @@ import java.util.List;
 public class Apex extends Slicer{
 
     public Apex(List<Point> polyline){
-        super(polyline,0.75,25,150,16,"res/images/apexslicer.png");
+        super(polyline,0.75,25,150,16,
+                ShadowDefend.getImgPath()+"apexslicer.png");
     }
     public Apex(List<Point> polyline,Point start, int targetInd){
-        super(polyline,0.75,25,150,16,"res/images/apexslicer.png",start);
+        super(polyline,0.75,25,150,16,
+                ShadowDefend.getImgPath()+"apexslicer.png",start);
         this.setTargetInd(targetInd);
     }
 

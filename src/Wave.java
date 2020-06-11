@@ -11,9 +11,9 @@ public class Wave {
     private boolean waveFinished = false;
     private static final List<Event> events = new ArrayList<>();
 
-
     private Wave() {
-        try (BufferedReader br = new BufferedReader(new FileReader("res/levels/waves.txt"))) {
+        String mapPATH = ShadowDefend.getMapPath();
+        try (BufferedReader br = new BufferedReader(new FileReader(mapPATH+"waves.txt"))) {
             String text;
             while ((text = br.readLine()) != null) {
                 String[] parts = text.split(",");
@@ -34,10 +34,6 @@ public class Wave {
         return wave;
     }
 
-    public int getCurEvent() {
-        return curEvent;
-    }
-
     public void progressWave(){
         if (!isFinished && curEvent<events.size()){
             ShadowDefend.setWaveNum(events.get(curEvent).getWaveNum());
@@ -52,24 +48,21 @@ public class Wave {
                 else if(events.get(curEvent).getWaveNum() != ShadowDefend.getWaveNum()){
                     this.isFinished = true;
                 }
-
             }
+        }
+    }
+    public void resetWave(){
+        this.isFinished = true;
+        waveFinished = false;
+        curEvent = 0;
+        for (Event event : events) {
+            event.setIsFinished(false);
         }
     }
 
     public boolean getIsWaveFinished() {
         return waveFinished;
     }
-
-    public void resetWave(){
-        this.isFinished = true;
-        waveFinished = false;
-        curEvent = 0;
-        for (int i=0;i<events.size();i++){
-            events.get(i).setIsFinished(false);
-        }
-    }
-
     public boolean getIsFinished() {
         return isFinished;
     }

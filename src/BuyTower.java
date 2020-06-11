@@ -14,7 +14,7 @@ public class BuyTower {
     private BuyTower(String selectedTower, TiledMap map) {
         this.selectedTower = selectedTower;
         this.map = map;
-        this.towerImage = new Image("res/images/" + selectedTower + ".png");
+        this.towerImage = new Image(ShadowDefend.getImgPath() + selectedTower + ".png");
     }
 
     public static BuyTower getInstance(String selectedTower, TiledMap map) {
@@ -22,7 +22,7 @@ public class BuyTower {
             buyTower = new BuyTower(selectedTower, map);
         } else {
             buyTower.selectedTower = selectedTower;
-            buyTower.towerImage = new Image("res/images/" + selectedTower + ".png");
+            buyTower.towerImage = new Image(ShadowDefend.getImgPath() + selectedTower + ".png");
             buyTower.map = map;
         }
         return buyTower;
@@ -34,7 +34,7 @@ public class BuyTower {
 
     public boolean canPlace(Point p) {
         // make sure cursor is still in range of the window
-        if (p.x < 0 || p.x > Window.getWidth() || p.y < 0 || p.x > Window.getHeight()) {
+        if (p.x < 0 || p.x >= Window.getWidth() || p.y < 0 || p.y >= Window.getHeight()) {
             return false;
         }
 

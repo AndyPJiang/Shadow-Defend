@@ -10,12 +10,6 @@ public abstract class Event {
     }
     public abstract void runEvent();
 
-    public boolean getIsFinished() {
-        return isFinished;
-    }
-    public void setIsFinished(boolean bool) {
-        isFinished = bool;
-    }
     public double getFrameCount() {
         return frameCount;
     }
@@ -30,5 +24,11 @@ public abstract class Event {
     }
     public double getDelay() {
         return delay;
+    }
+    public boolean getIsFinished() {
+        return isFinished;
+    }
+    public void setIsFinished(boolean bool) {
+        isFinished = bool;
     }
 }

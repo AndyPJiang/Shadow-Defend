@@ -5,9 +5,9 @@ public class DelayEvent extends Event{
     }
     public void runEvent(){
         if (!this.getIsFinished()){
-            this.increaseFrameCount(ShadowDefend.getTimescale());
-            if (this.getFrameCount()/ShadowDefend.getFPS()>=this.getDelay()){
-                this.setIsFinished(true);
+            increaseFrameCount(ShadowDefend.getTimescale());
+            if (getFrameCount()/ShadowDefend.getFPS() >= getDelay()){
+                setIsFinished(true);
             }
         }
     }

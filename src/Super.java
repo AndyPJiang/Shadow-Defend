@@ -6,10 +6,12 @@ import java.util.List;
 public class Super extends Slicer {
 
     public Super(List<Point> polyline){
-        super(polyline,1.5,1,15,2,"res/images/superslicer.png");
+        super(polyline,1.5,1,15,2,
+                ShadowDefend.getImgPath()+"superslicer.png");
     }
     public Super(List<Point> polyline,Point start, int targetInd){
-        super(polyline,1.5,1,15,2,"res/images/superslicer.png",start);
+        super(polyline,1.5,1,15,2,
+                ShadowDefend.getImgPath()+"superslicer.png",start);
         this.setTargetInd(targetInd);
     }
 
