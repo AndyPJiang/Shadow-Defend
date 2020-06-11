@@ -1,6 +1,10 @@
+/**
+ * Defines the font sizes for panel and the render function
+ */
+
 public interface Panel {
-    int smallSize = 15;
-    int mediumSize = 25;
-    int largeSize = 50;
+    int smallFont = 15;
+    int mediumFont = 25;
+    int largeFont = 50;
     void renderPanel();
 }

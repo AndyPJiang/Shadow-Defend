@@ -1,8 +1,12 @@
 import bagel.Input;
-import bagel.Window;
 import bagel.util.Point;
 import bagel.util.Vector2;
 import java.util.List;
+
+
+/**
+ * Airsupport Defence
+ */
 
 public class Airplane extends Tower{
     private final double SPEED = 3;
@@ -12,6 +16,12 @@ public class Airplane extends Tower{
     private final double windowWidth;
     private final double windowHeight;
 
+
+    /**
+     * creates a new airplane
+     * @param p the position of the airplane
+     * @param isVertical whether the airplane will fly vertical or horizontal
+     */
     public Airplane(Point p,boolean isVertical){
         super(p,ShadowDefend.getImgPath()+"airsupport.png",
                 200,500,"airsupport");
@@ -21,6 +31,11 @@ public class Airplane extends Tower{
         windowHeight = ShadowDefend.getHeight();
     }
 
+    /**
+     * Attack enemy slicers. The airplane drops explosives that deal
+     * damage to all enemies within a given radius
+     * @param input The current mouse/keyboard state
+     */
     public void attack(Input input){
         frameCount+=ShadowDefend.getTimescale();
         if (frameCount/ShadowDefend.getFPS()>=dropTime && airplaneInRange()){
@@ -31,6 +46,10 @@ public class Airplane extends Tower{
         super.updateProjectiles(input);
     }
 
+
+    /**
+     * @return if airplane is outside the window
+     */
     private boolean airplaneInRange(){
         if (getCenter().x > windowWidth || getCenter().y > windowHeight){
             return false;
@@ -38,6 +57,12 @@ public class Airplane extends Tower{
         return true;
     }
 
+
+    /**
+     * Updates the position of the airplane and renders it on screen.
+     * The airplane flies in a straight line either horizontally or vertically
+     * @param input The current mouse/keyboard state
+     */
     @Override
     public void render(Input input){
         Vector2 dx;

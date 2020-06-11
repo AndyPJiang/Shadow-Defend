@@ -6,8 +6,10 @@ import bagel.util.Rectangle;
 import bagel.util.Vector2;
 
 /**
+ * Code from Project 1 Solution by Rohyl.
  * Represents a game entity
  */
+
 public abstract class Sprite {
 
     private final Image image;
@@ -27,6 +29,9 @@ public abstract class Sprite {
     }
 
 
+    /**
+     * @return sprite as a rectangle
+     */
     public Rectangle getRect() {
         return new Rectangle(rect);
     }
@@ -40,10 +45,18 @@ public abstract class Sprite {
         rect.moveTo(rect.topLeft().asVector().add(dx).asPoint());
     }
 
+
+    /**
+     * @return center point of the sprite
+     */
     public Point getCenter() {
         return getRect().centre();
     }
 
+    /**
+     * Update the angle of the sprite
+     * @param angle new angle
+     */
     public void setAngle(double angle) {
         this.angle = angle;
     }

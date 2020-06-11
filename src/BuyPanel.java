@@ -3,6 +3,12 @@ import bagel.util.Colour;
 import bagel.util.Point;
 import bagel.util.Rectangle;
 
+
+/**
+ * The panel that displays the towers available for purchase,
+ *  a list of key binds, and the money the player currently has
+ */
+
 public class BuyPanel implements Panel{
     private static BuyPanel buyPanel = null;
     private final Image background;
@@ -30,6 +36,10 @@ public class BuyPanel implements Panel{
     private final int airplanePrice;
 
 
+    /**
+     * Creates a new buy panel. Visibility is private as there will only be
+     * one instance of this class
+     */
     private BuyPanel(){
         String imgPath = ShadowDefend.getImgPath();
         this.background = new Image(imgPath+"buypanel.png");
@@ -38,6 +48,8 @@ public class BuyPanel implements Panel{
         this.airplaneImg = new Image(imgPath+"airsupport.png");
         center = background.getHeight()/2;
         width = background.getWidth();
+
+        // calculate the centers of each tower image
         tankCenter = new Point(OFFSET_X,center-OFFSET_Y);
         superTankCenter = new Point(OFFSET_X+GAP,center-OFFSET_Y);
         airplaneCenter= new Point(OFFSET_X + 2 * GAP,center- OFFSET_Y);
@@ -46,19 +58,28 @@ public class BuyPanel implements Panel{
         this.airplanePrice = ShadowDefend.getAirplanePrice();
     }
 
+
+
+    /**
+     * Render the panel
+     */
     public void renderPanel(){
         String fontPath = ShadowDefend.getFontPath();
-        Font font = new Font(fontPath+"DejaVuSans-Bold.ttf",mediumSize);
+        Font font = new Font(fontPath+"DejaVuSans-Bold.ttf",mediumFont);
 
         double tankWidth = tankImg.getWidth();
         double superTankWidth = superTankImg.getWidth();
         double airplaneWidth = airplaneImg.getWidth();
 
+        // draw the background
         background.drawFromTopLeft(0,0);
+        // draw the tower images
         tankImg.draw(tankCenter.x,tankCenter.y);
         superTankImg.draw(superTankCenter.x,superTankCenter.y);
         airplaneImg.draw(airplaneCenter.x,airplaneCenter.y);
 
+        // draw the prices of each tower underneath the tower image, colour if green if
+        // players has enough money to purchase it, red otherwise
         if (ShadowDefend.getMoney()>= tankPrice){
             font.drawString("$"+tankPrice, tankCenter.x -tankWidth/2,
                     tankCenter.y+50, drawOptions.setBlendColour(Colour.GREEN));
@@ -81,21 +102,32 @@ public class BuyPanel implements Panel{
                     airplaneCenter.y+50,drawOptions.setBlendColour(Colour.RED));
         }
 
-        Font fontKeyBind = new Font(fontPath+"DejaVuSans-Bold.ttf",smallSize);
+        // draw the key binds
+        Font fontKeyBind = new Font(fontPath+"DejaVuSans-Bold.ttf",smallFont);
         fontKeyBind.drawString(
                 "Key binds:\n\nS - Start Wave\nL - Increase Timescale\nK - Decrease Timescale",
                 width/2-fontKeyBind.getWidth("Key binds"), center-OFFSET_KEYBIND);
 
 
-        Font fontMoney = new Font(fontPath+"DejaVuSans-Bold.ttf",largeSize);
+        // draw the money that the player has
+        Font fontMoney = new Font(fontPath+"DejaVuSans-Bold.ttf",largeFont);
         fontMoney.drawString("$"+ShadowDefend.getMoney(),
                 width-OFFSET_MONEY, OFFSET_Y_MONEY);
     }
 
 
+
+    /**
+     * Gets the type of tower that the user clicked on to purchase, if the player
+     * has enough money to buy it
+     * @param input The current mouse/keyboard state
+     * @return returns the tower type as a string if one was clicked, otherwise an empty string
+     */
     public String getTowerType(Input input){
         Point p = input.getMousePosition();
         Rectangle rect = tankImg.getBoundingBoxAt(tankCenter);
+        // find which tower the player has clicked. Return the tower type if player has
+        // enough money to buy it
         if (rect.intersects(p)){
             return ShadowDefend.getMoney()>=tankPrice ? "tank" : "" ;
         }
@@ -107,13 +139,21 @@ public class BuyPanel implements Panel{
         if (rect.intersects(p)){
             return ShadowDefend.getMoney()>=airplanePrice ? "airsupport" : "";
         }
+        // return empty string if no tower was clicked
         return "";
     }
 
+    /**
+     * @return the background image of the buy panel
+     */
     public Image getBackground() {
         return background;
     }
 
+    /**
+     * @return an instance of the BuyPanel class. If an instance was created already, return it,
+     * otherwise create a new one.
+     */
     public static BuyPanel getInstance(){
         if (buyPanel == null){
             buyPanel = new BuyPanel();
