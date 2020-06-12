@@ -319,15 +319,15 @@ public class ShadowDefend extends AbstractGame {
         // draw the map
         map.draw(0,0,0,0,WIDTH,HEIGHT);
 
-        // handle timescale key presses
-        if (input.wasPressed(Keys.L)) {
-            increaseTimescale();
-        }
-        if (input.wasPressed(Keys.K)) {
-            decreaseTimescale();
-        }
-
         if (!gameHasEnded){
+            // handle timescale key presses
+            if (input.wasPressed(Keys.L)) {
+                increaseTimescale();
+            }
+            if (input.wasPressed(Keys.K)) {
+                decreaseTimescale();
+            }
+
             // Handle starting game and buying key presses only if game is still in progress
             if (input.wasPressed(Keys.S) && !hasStarted && !isBuying) {
                 // start wave only if player is not buying
@@ -382,6 +382,12 @@ public class ShadowDefend extends AbstractGame {
             // if slicer reaches the end, incur a penalty
             if (slicer.getIsFinished()){
                 lives -= slicer.getPenalty();
+                // exit game if no lives left
+                if (lives<=0){
+                    gameHasEnded = true;
+                    Window.close();
+                    break;
+                }
                 slicers.remove(i);
             }else if (slicer.getHealth()<=0){
                 // if slicer was eliminated by tower, give a reward
@@ -405,15 +411,8 @@ public class ShadowDefend extends AbstractGame {
                 }
             }
         }
-
-        // exit game if no lives left
-        if (lives<=0){
-            Window.close();
-        }
-
         // Render the panels last so that go in front of everything else
         buyPanel.renderPanel();
         statusPanel.renderPanel();
-
     }
 }

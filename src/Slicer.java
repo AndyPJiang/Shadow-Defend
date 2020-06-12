@@ -51,14 +51,15 @@ public abstract class Slicer extends Sprite{
      * @param imageFile the path to the slicer image as a string
      * @param start starting position of the slicer
      */
-    public Slicer(List<Point> polyline,double speed,
-                  int health, int reward, int penalty, String imageFile, Point start){
+    public Slicer(List<Point> polyline, double speed, int health, int reward,
+                  int penalty, String imageFile, Point start, int targetInd){
         super(start,imageFile);
         this.polyline = polyline;
         this.speed = speed;
         this.health = health;
         this.reward = reward;
         this.penalty = penalty;
+        this.targetInd = targetInd;
     }
 
     /**

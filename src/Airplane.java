@@ -25,6 +25,7 @@ public class Airplane extends Tower{
     public Airplane(Point p,boolean isVertical){
         super(p,ShadowDefend.getImgPath()+"airsupport.png",
                 200,500,"airsupport");
+        // randomly choose drop time between 0 and 3 seconds
         dropTime = Math.random() * 3;
         this.isVertical = isVertical;
         windowWidth = ShadowDefend.getWidth();
@@ -41,7 +42,7 @@ public class Airplane extends Tower{
         if (frameCount/ShadowDefend.getFPS()>=dropTime && airplaneInRange()){
             // create a new explosive if wait time is over
             addProjectile(new Explosive(getCenter()));
-            // randomly choose drop time between 0 and 3 seconds
+            // randomly choose drop time between 0 and 3 seconds again
             dropTime = Math.random() * 3;
             frameCount = 0.0;
         }

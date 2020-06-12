@@ -7,15 +7,18 @@ import java.util.List;
  */
 
 public class Super extends Slicer {
+    private static final double SPEED = 1.5;
+    private static final int HEALTH = 1;
+    private static final int REWARD = 15;
+    private static final int PENALTY = 2;
     /**
      * Create new super slicer. By default a slicer follows path of polyline from the beginning
      * @param polyline The polyline that the slicer must traverse
      */
     public Super(List<Point> polyline){
-        super(polyline,1.5,1,15,2,
+        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
                 ShadowDefend.getImgPath()+"superslicer.png");
     }
-
 
     /**
      * Create new regular slicer. We can specify a specific starting point
@@ -26,9 +29,8 @@ public class Super extends Slicer {
      * @param targetInd the point in polyline that we are targeting
      */
     public Super(List<Point> polyline,Point start, int targetInd){
-        super(polyline,1.5,1,15,2,
-                ShadowDefend.getImgPath()+"superslicer.png",start);
-        this.setTargetInd(targetInd);
+        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
+                ShadowDefend.getImgPath()+"superslicer.png",start,targetInd);
     }
 
 

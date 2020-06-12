@@ -7,16 +7,19 @@ import java.util.List;
  */
 
 public class Mega extends Slicer{
+    private static final double SPEED = 1.5;
+    private static final int HEALTH = 2;
+    private static final int REWARD = 10;
+    private static final int PENALTY = 4;
 
     /**
      * Create new mega slicer. By default a slicer follows path of polyline from the beginning
      * @param polyline The polyline that the slicer must traverse
      */
     public Mega(List<Point> polyline){
-        super(polyline,1.5,2,10,4,
+        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
                 ShadowDefend.getImgPath()+"megaslicer.png");
     }
-
 
     /**
      * Create new mega slicer. We can specify a specific starting point
@@ -27,10 +30,8 @@ public class Mega extends Slicer{
      * @param targetInd the point in polyline that we are targeting
      */
     public Mega(List<Point> polyline,Point start, int targetInd){
-        super(polyline,1.5,2,10,4,
-                ShadowDefend.getImgPath()+"megaslicer.png",start);
-
-        this.setTargetInd(targetInd);
+        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
+                ShadowDefend.getImgPath()+"megaslicer.png",start,targetInd);
     }
 
 

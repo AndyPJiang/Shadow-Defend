@@ -2,19 +2,22 @@ import bagel.util.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * An apex slicer
  */
 
 public class Apex extends Slicer{
+    private static final double SPEED = 0.75;
+    private static final int HEALTH = 25;
+    private static final int REWARD = 150;
+    private static final int PENALTY = 16;
 
     /**
      * Create new apex slicer. By default a slicer follows path of polyline from the beginning
      * @param polyline The polyline that the slicer must traverse
      */
     public Apex(List<Point> polyline){
-        super(polyline,0.75,25,150,16,
+        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
                 ShadowDefend.getImgPath()+"apexslicer.png");
     }
 
@@ -26,12 +29,10 @@ public class Apex extends Slicer{
      * @param start position for slicer to start at
      * @param targetInd the point in polyline that we are targeting
      */
-    public Apex(List<Point> polyline,Point start, int targetInd){
-        super(polyline,0.75,25,150,16,
-                ShadowDefend.getImgPath()+"apexslicer.png",start);
-        this.setTargetInd(targetInd);
+    public Apex(List<Point> polyline, Point start, int targetInd){
+        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
+                ShadowDefend.getImgPath()+"apexslicer.png",start, targetInd);
     }
-
 
     /**
      * Spawn new child slicers when eliminated

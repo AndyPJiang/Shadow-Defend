@@ -6,13 +6,18 @@ import java.util.List;
  * A regular slicer
  */
 public class Regular extends Slicer{
+    private static final double SPEED = 2;
+    private static final int HEALTH = 1;
+    private static final int REWARD = 2;
+    private static final int PENALTY = 1;
 
     /**
      * Create new regular slicer. By default a slicer follows path of polyline from the beginning
      * @param polyline The polyline that the slicer must traverse
      */
     public Regular(List<Point> polyline){
-        super(polyline,2,1,2,1,ShadowDefend.getImgPath()+"slicer.png");
+        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
+                ShadowDefend.getImgPath()+"slicer.png");
     }
 
     /**
@@ -24,8 +29,8 @@ public class Regular extends Slicer{
      * @param targetInd the point in polyline that we are targeting
      */
     public Regular(List<Point> polyline,Point start, int targetInd){
-        super(polyline,2,1,2,1,ShadowDefend.getImgPath()+"slicer.png",start);
-        this.setTargetInd(targetInd);
+        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
+                ShadowDefend.getImgPath()+"slicer.png",start,targetInd);
     }
 
 
