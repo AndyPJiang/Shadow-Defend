@@ -12,13 +12,12 @@ import java.util.List;
 public abstract class Slicer extends Sprite{
     private final DrawOptions options = new DrawOptions();   // used to set rotation when drawing slicer
     private final List<Point> polyline;
-    private int targetInd = 1;  // current point in polylines
-    private boolean isFinished = false;
     private final double speed;
-    private int health;
     private final int reward;
     private final int penalty;
-
+    private int targetInd = 1;  // current point in polylines
+    private boolean isFinished = false;
+    private int health;
 
     /**
      * Create a new slicer. By default a slicer follows path of polyline from the beginning

@@ -44,6 +44,7 @@ public class Super extends Slicer {
         Point start = getCenter();
         List<Slicer> newSlicers = new ArrayList<>();
         for(int i=0;i<spawnNum;i++){
+            // spawn child slicer at the current location of parent slicer
             newSlicers.add(new Regular(polyline,start,targetInd));
         }
         ShadowDefend.addSlicer(newSlicers);

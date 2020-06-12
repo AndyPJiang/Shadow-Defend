@@ -1,7 +1,6 @@
 import bagel.util.Point;
 import java.util.List;
 
-
 /**
  * A regular slicer
  */
@@ -35,7 +34,8 @@ public class Regular extends Slicer{
 
 
     /**
-     * Spawn new child slicers when eliminated
+     * Spawn new child slicers when eliminated. A regular slicer does not spawn
+     * any child slicers on elimination thus the function is empty.
      */
     public void spawnOnDeath(){}
 }

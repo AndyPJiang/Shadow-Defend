@@ -24,7 +24,9 @@ public class Apex extends Slicer{
     /**
      * Create new apex slicer. We can specify a specific starting point
      * for the slicer to start at. This is used to spawn new slicers
-     * at the position that its parent slicer was eliminated
+     * at the position that its parent slicer was eliminated. This
+     * constructor is not used in this game but is here for consistency
+     * across all slicers.
      * @param polyline The polyline that the slicer must traverse
      * @param start position for slicer to start at
      * @param targetInd the point in polyline that we are targeting
@@ -42,8 +44,10 @@ public class Apex extends Slicer{
         List<Point> polyline = getPolyline();
         int targetInd = getTargetInd();
         Point start = getCenter();
+
         List<Slicer> newSlicers = new ArrayList<>();
         for(int i=0;i<spawnNum;i++){
+            // spawn child slicer at the current location of parent slicer
             newSlicers.add(new Mega(polyline,start,targetInd));
         }
         ShadowDefend.addSlicer(newSlicers);

@@ -59,7 +59,6 @@ public class BuyPanel implements Panel{
     }
 
 
-
     /**
      * Render the panel
      */

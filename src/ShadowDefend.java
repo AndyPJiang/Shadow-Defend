@@ -26,7 +26,7 @@ public class ShadowDefend extends AbstractGame {
     private static final int INIT_LIVES = 25;
     private static final int INIT_LEVEL = 1;
     private static final String INIT_STATUS = "Awaiting Start";
-    private static boolean airplaneIsVertical = false;
+    private static final boolean INIT_PLANE_ORIENTATION = false;
 
     // initialise variables to game presets
     private static int level = INIT_LEVEL;
@@ -34,27 +34,36 @@ public class ShadowDefend extends AbstractGame {
     private static int money = INIT_MONEY;
     private static int waveNum = INIT_WAVENUM;
     private static int lives = INIT_LIVES;
+    private static boolean airplaneIsVertical = INIT_PLANE_ORIENTATION;
     // The top of the stack is the current status
     private static final List<String> status = new ArrayList<>();
-
     // stores all slicers that are currently in game
     private static final List<Slicer> slicers = new ArrayList<>();
     // stores all towers that are currently in game
     private static final List<Tower> towers = new ArrayList<>();
-
     private static TiledMap map;
     private static List<Point> polyline;
+
+    // price of each tower
     private static final int tankPrice = 250;
     private static final int superTankPrice = 600;
     private static final int airplanePrice = 500;
 
+    // reward at end of each wave event
+    private final int ENDWAVE_REWARD_SCALE = 100;
+    private final int ENDWAVE_REWARD = 150;
+
+    // Single instance classes
     private final Wave wave;
     private final StatusPanel statusPanel;
     private final BuyPanel buyPanel;
     private BuyTower buyTower;
+
+    // dummies to keep track of game state
     private boolean hasStarted = false;
     private boolean isBuying = false;
     private boolean gameHasEnded = false;
+
     /**
      * Creates a new instance of the ShadowDefend game
      */
@@ -153,7 +162,7 @@ public class ShadowDefend extends AbstractGame {
             lives = INIT_LIVES;
             timescale = INIT_TIMESCALE;
             waveNum = INIT_WAVENUM;
-            airplaneIsVertical = false;
+            airplaneIsVertical = INIT_PLANE_ORIENTATION;
             isBuying = false;
             status.clear();
             status.add(INIT_STATUS);
@@ -304,11 +313,12 @@ public class ShadowDefend extends AbstractGame {
     }
 
     /**
-     * Return window width
+     * @return window width
      */
     public static int getWidth() {
         return WIDTH;
     }
+
 
     /**
      * Update the state of the game, potentially reading from input
@@ -397,7 +407,8 @@ public class ShadowDefend extends AbstractGame {
             }
             // if current wave event has finished, stop game and wait for key press to start next wave
             if (wave.getIsFinished() && slicers.isEmpty()){
-                ShadowDefend.addMoney(150+waveNum*100);
+                // award player with money at end of each wave event
+                ShadowDefend.addMoney(ENDWAVE_REWARD+waveNum*ENDWAVE_REWARD_SCALE);
                 hasStarted = false;
                 // if player is still in the process of buying, don't remove that status
                 if (isBuying){

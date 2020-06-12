@@ -46,6 +46,7 @@ public class Mega extends Slicer{
         Point start = getCenter();
         List<Slicer> newSlicers = new ArrayList<>();
         for(int i=0;i<spawnNum;i++){
+            // spawn child slicer at the current location of parent slicer
             newSlicers.add(new Super(polyline,start,targetInd));
         }
         ShadowDefend.addSlicer(newSlicers);
