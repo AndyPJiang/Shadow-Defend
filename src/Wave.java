@@ -21,7 +21,8 @@ public class Wave {
      */
     private Wave() {
         String mapPATH = ShadowDefend.getMapPath();
-        // read in wave events and store them in a list
+        // read in wave events and store them in a list.
+        // This block of code is taken from the lecture 8 slide 30
         try (BufferedReader br = new BufferedReader(new FileReader(mapPATH+"waves.txt"))) {
             String text;
             while ((text = br.readLine()) != null) {

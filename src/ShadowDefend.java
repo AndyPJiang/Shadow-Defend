@@ -137,7 +137,6 @@ public class ShadowDefend extends AbstractGame {
         }
     }
 
-
     /**
      * reset the game state after wave has finished
      */
@@ -156,6 +155,8 @@ public class ShadowDefend extends AbstractGame {
             waveNum = INIT_WAVENUM;
             airplaneIsVertical = false;
             isBuying = false;
+            status.clear();
+            status.add(INIT_STATUS);
         }
         catch (Exception e){
             // if no more maps, game is finished
@@ -264,6 +265,7 @@ public class ShadowDefend extends AbstractGame {
             timescale++;
         }
     }
+
     /**
      * Decrease the timescale
      */
@@ -404,8 +406,14 @@ public class ShadowDefend extends AbstractGame {
             }
         }
 
+        // exit game if no lives left
+        if (lives<=0){
+            Window.close();
+        }
+
         // Render the panels last so that go in front of everything else
         buyPanel.renderPanel();
         statusPanel.renderPanel();
+
     }
 }
