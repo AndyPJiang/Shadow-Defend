@@ -10,11 +10,11 @@ import java.util.List;
  */
 
 public class BuyTower {
+    // class instance
     private static BuyTower buyTower = null;
     private String selectedTower;
     private Image towerImage;
     private TiledMap map;
-
 
     /**
      * Create a new BuyTower. Visibility is private as there will only be
@@ -30,6 +30,8 @@ public class BuyTower {
 
 
     /**
+     * @param selectedTower the tower selected by the player as a string
+     * @param map the game map, used to check for blocked tiles
      * @return an instance of the BuyTower class. If an instance was created already, return it,
      * otherwise create a new one.
      */
@@ -55,6 +57,7 @@ public class BuyTower {
     }
 
     /**
+     * @param p the tower position
      * @return if the tower can be placed at the current position. Can only be placed
      * if it doesn't intersect with other towers and the panels, and if the position is
      * not blocked

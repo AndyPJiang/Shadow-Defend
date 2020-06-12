@@ -10,16 +10,20 @@ import bagel.util.Rectangle;
  */
 
 public class BuyPanel implements Panel{
+    // class instance
     private static BuyPanel buyPanel = null;
+
+    private final DrawOptions drawOptions = new DrawOptions();
+    // images of the towers and panel background
     private final Image background;
     private final Image tankImg;
     private final Image superTankImg;
     private final Image airplaneImg;
-    private final DrawOptions drawOptions = new DrawOptions();
 
     private final double center;
     private final double width;
 
+    // some parameters for rendering
     private final int OFFSET_X = 64;
     private final int OFFSET_Y = 10;
     private final int OFFSET_KEYBIND = 25;
@@ -27,6 +31,7 @@ public class BuyPanel implements Panel{
     private final int OFFSET_Y_MONEY = 65;
     private final int GAP = 120;
 
+    // position where these tower images will be rendered
     private final Point tankCenter;
     private final Point superTankCenter;
     private final Point airplaneCenter;
@@ -64,7 +69,8 @@ public class BuyPanel implements Panel{
      */
     public void renderPanel(){
         String fontPath = ShadowDefend.getFontPath();
-        Font font = new Font(fontPath+"DejaVuSans-Bold.ttf",mediumFont);
+        String fontFile = "DejaVuSans-Bold.ttf";
+        Font font = new Font(fontPath+fontFile,mediumFont);
 
         double tankWidth = tankImg.getWidth();
         double superTankWidth = superTankImg.getWidth();
@@ -102,14 +108,14 @@ public class BuyPanel implements Panel{
         }
 
         // draw the key binds
-        Font fontKeyBind = new Font(fontPath+"DejaVuSans-Bold.ttf",smallFont);
+        Font fontKeyBind = new Font(fontPath+fontFile,smallFont);
         fontKeyBind.drawString(
                 "Key binds:\n\nS - Start Wave\nL - Increase Timescale\nK - Decrease Timescale",
                 width/2-fontKeyBind.getWidth("Key binds"), center-OFFSET_KEYBIND);
 
 
         // draw the money that the player has
-        Font fontMoney = new Font(fontPath+"DejaVuSans-Bold.ttf",largeFont);
+        Font fontMoney = new Font(fontPath+fontFile,largeFont);
         fontMoney.drawString("$"+ShadowDefend.getMoney(),
                 width-OFFSET_MONEY, OFFSET_Y_MONEY);
     }

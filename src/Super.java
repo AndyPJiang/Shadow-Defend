@@ -35,7 +35,7 @@ public class Super extends Slicer {
 
 
     /**
-     * Spawn new child slicers when eliminated
+     * Spawn new child slicers when eliminated. Spawn it at the position that it was eliminated.
      */
     public void spawnOnDeath(){
         int spawnNum = 2;

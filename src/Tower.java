@@ -105,6 +105,8 @@ public abstract class Tower extends Sprite{
     }
 
     /**
+     * @param p the position of the tower
+     * @param radius the attack radius of the tower
      * @return all the slicers that are in attack range of a tower
      */
     public static List<Slicer> findTargets(Point p, double radius){

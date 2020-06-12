@@ -7,7 +7,7 @@ import java.util.List;
  */
 
 public class Explosive extends Projectile{
-
+    // time to wait before explosive explodes
     private final int DETONATION_TIME = 2;
     private double frameCount = 0.0;
     private final double RADIUS = 200;

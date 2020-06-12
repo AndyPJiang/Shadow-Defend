@@ -1,5 +1,4 @@
 public abstract class Event {
-
     /**
      * A Wave Event
      */

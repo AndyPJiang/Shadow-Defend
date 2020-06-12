@@ -35,7 +35,6 @@ public abstract class Projectile extends Sprite{
         this.hasFinished = hasFinished;
     }
 
-
     /**
      * @return the damage the projectile does
      */

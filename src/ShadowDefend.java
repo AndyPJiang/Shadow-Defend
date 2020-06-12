@@ -20,7 +20,7 @@ public class ShadowDefend extends AbstractGame {
 
     // game presets
     private static final double INIT_TIMESCALE = 1;
-    private static final double MAX_TIMESCALE = 20;
+    private static final double MAX_TIMESCALE = 5;
     private static final int INIT_MONEY = 500;
     private static final int INIT_WAVENUM = 1;
     private static final int INIT_LIVES = 25;
@@ -35,7 +35,7 @@ public class ShadowDefend extends AbstractGame {
     private static int waveNum = INIT_WAVENUM;
     private static int lives = INIT_LIVES;
     private static boolean airplaneIsVertical = INIT_PLANE_ORIENTATION;
-    // The top of the stack is the current status
+    // stores the statuses of the game as a stack. The top of the stack is the current status
     private static final List<String> status = new ArrayList<>();
     // stores all slicers that are currently in game
     private static final List<Slicer> slicers = new ArrayList<>();
@@ -329,6 +329,7 @@ public class ShadowDefend extends AbstractGame {
         // draw the map
         map.draw(0,0,0,0,WIDTH,HEIGHT);
 
+        // only accept key press inputs if game has not finished
         if (!gameHasEnded){
             // handle timescale key presses
             if (input.wasPressed(Keys.L)) {
@@ -356,6 +357,7 @@ public class ShadowDefend extends AbstractGame {
             }else if (input.wasPressed(MouseButtons.LEFT) && isBuying){
                 // buy the selected tower if the position is legal
                 if (buyTower.buy(input)){
+                    // change the status if tower was bought
                     status.remove(status.size()-1);
                     isBuying = false;
                 }

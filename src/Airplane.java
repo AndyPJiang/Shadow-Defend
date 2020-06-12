@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Airplane extends Tower{
     private final double SPEED = 3;
+    // how long to wait to drop the next explosive
     private double dropTime;
     private final boolean isVertical;
     private double frameCount = 0.0;
