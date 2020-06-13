@@ -7,6 +7,7 @@ import java.util.List;
  */
 
 public class Apex extends Slicer{
+    private static final String NAME = "apexslicer";
     private static final double SPEED = 0.75;
     private static final int HEALTH = 25;
     private static final int REWARD = 150;
@@ -17,7 +18,7 @@ public class Apex extends Slicer{
      * @param polyline The polyline that the slicer must traverse
      */
     public Apex(List<Point> polyline){
-        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
+        super(polyline,NAME,SPEED, HEALTH, REWARD, PENALTY,
                 ShadowDefend.getImgPath()+"apexslicer.png");
     }
 
@@ -32,7 +33,7 @@ public class Apex extends Slicer{
      * @param targetInd the point in polyline that we are targeting
      */
     public Apex(List<Point> polyline, Point start, int targetInd){
-        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
+        super(polyline, NAME, SPEED, HEALTH, REWARD, PENALTY,
                 ShadowDefend.getImgPath()+"apexslicer.png",start, targetInd);
     }
 
@@ -51,6 +52,14 @@ public class Apex extends Slicer{
             newSlicers.add(new Mega(polyline,start,targetInd));
         }
         ShadowDefend.addSlicer(newSlicers);
+    }
+
+    /**
+     * @param polyline The polyline that the slicer must traverse
+     * @return new a new apex slicer
+     */
+    public Slicer newSlicer(List<Point> polyline){
+        return new Apex(polyline);
     }
 
 }

@@ -20,6 +20,7 @@ public class DelayEvent extends Event{
             increaseFrameCount(ShadowDefend.getTimescale());
             if (getFrameCount()/ShadowDefend.getFPS() >= getDelay()){
                 setIsFinished(true);
+                setFrameCount(0.0);
             }
         }
     }

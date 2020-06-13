@@ -7,6 +7,7 @@ import java.util.List;
  */
 
 public class Mega extends Slicer{
+    private static final String NAME = "megaslicer";
     private static final double SPEED = 1.5;
     private static final int HEALTH = 2;
     private static final int REWARD = 10;
@@ -17,7 +18,7 @@ public class Mega extends Slicer{
      * @param polyline The polyline that the slicer must traverse
      */
     public Mega(List<Point> polyline){
-        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
+        super(polyline, NAME, SPEED, HEALTH, REWARD, PENALTY,
                 ShadowDefend.getImgPath()+"megaslicer.png");
     }
 
@@ -30,7 +31,7 @@ public class Mega extends Slicer{
      * @param targetInd the point in polyline that we are targeting
      */
     public Mega(List<Point> polyline,Point start, int targetInd){
-        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
+        super(polyline,NAME, SPEED, HEALTH, REWARD, PENALTY,
                 ShadowDefend.getImgPath()+"megaslicer.png",start,targetInd);
     }
 
@@ -50,5 +51,13 @@ public class Mega extends Slicer{
             newSlicers.add(new Super(polyline,start,targetInd));
         }
         ShadowDefend.addSlicer(newSlicers);
+    }
+
+    /**
+     * @param polyline The polyline that the slicer must traverse
+     * @return new a new mega slicer
+     */
+    public Slicer newSlicer(List<Point> polyline){
+        return new Mega(polyline);
     }
 }

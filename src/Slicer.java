@@ -15,6 +15,7 @@ public abstract class Slicer extends Sprite{
     private final double speed;
     private final int reward;
     private final int penalty;
+    private final String name;
     private int targetInd = 1;  // current point in polylines
     private boolean isFinished = false;
     private int health;
@@ -28,10 +29,11 @@ public abstract class Slicer extends Sprite{
      * @param penalty penalty if slicer reaches end
      * @param imageFile the path to the slicer image as a string
      */
-    public Slicer(List<Point> polyline,double speed,
+    public Slicer(List<Point> polyline, String name, double speed,
                   int health, int reward, int penalty, String imageFile){
         super(polyline.get(0), imageFile);
         this.polyline = polyline;
+        this.name = name;
         this.speed = speed;
         this.health = health;
         this.reward = reward;
@@ -50,10 +52,11 @@ public abstract class Slicer extends Sprite{
      * @param imageFile the path to the slicer image as a string
      * @param start starting position of the slicer
      */
-    public Slicer(List<Point> polyline, double speed, int health, int reward,
+    public Slicer(List<Point> polyline, String name, double speed, int health, int reward,
                   int penalty, String imageFile, Point start, int targetInd){
         super(start,imageFile);
         this.polyline = polyline;
+        this.name = name;
         this.speed = speed;
         this.health = health;
         this.reward = reward;
@@ -119,10 +122,23 @@ public abstract class Slicer extends Sprite{
         return polyline;
     }
 
+
+    /**
+     * @return the slicer type
+     */
+    public String getName() {
+        return name;
+    }
     /**
      * spawns child slicers on elimination. This is an abstract method
      */
     public abstract void spawnOnDeath();
+
+    /**
+     * @param polyline The polyline that the slicer must traverse
+     * @return a new instance of the slicer class
+     */
+    public abstract Slicer newSlicer(List<Point> polyline);
 
     /**
      * Updates the current state of the slicer. The slicer moves towards its next target point in

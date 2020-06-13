@@ -10,6 +10,12 @@ import java.util.List;
 
 public class Airplane extends Tower{
     private final double SPEED = 3;
+    private static final double RADIUS = 200;
+    private static final int DAMAGE = 500;
+    private static final int PLANE_PRICE = 500;
+
+
+    // maximum and minimum time to wait between successive drops
     private final int MAX_DROP_TIME = 2;
     private final int MIN_DROP_TIME = 1;
     // how long to wait to drop the next explosive
@@ -23,17 +29,25 @@ public class Airplane extends Tower{
     /**
      * creates a new airplane
      * @param p the position of the airplane
-     * @param isVertical whether the airplane will fly vertical or horizontal
      */
-    public Airplane(Point p,boolean isVertical){
+    public Airplane(Point p){
         super(p,ShadowDefend.getImgPath()+"airsupport.png",
-                200,500,"airsupport");
+                RADIUS, DAMAGE,"airsupport", PLANE_PRICE);
         // randomly choose drop time between 0 and 3 seconds
         dropTime = Math.random() * (MAX_DROP_TIME-MIN_DROP_TIME) + MIN_DROP_TIME;
-        this.isVertical = isVertical;
+        this.isVertical = ShadowDefend.getAirplaneIsVertical();
+        ShadowDefend.setAirplaneIsVertical(!this.isVertical);
         windowWidth = ShadowDefend.getWidth();
         windowHeight = ShadowDefend.getHeight();
     }
+
+    /**
+     * @return the airplane price
+     */
+    public static int getPrice() {
+        return PLANE_PRICE;
+    }
+
 
     /**
      * Attack enemy slicers. The airplane drops explosives that deal
@@ -49,7 +63,6 @@ public class Airplane extends Tower{
             dropTime = Math.random() * (MAX_DROP_TIME-MIN_DROP_TIME) + MIN_DROP_TIME;
             frameCount = 0.0;
         }
-        System.out.println(dropTime);
         // update each explosive
         super.updateProjectiles(input);
     }
@@ -90,6 +103,19 @@ public class Airplane extends Tower{
         List<Projectile> projectiles = getProjectiles();
         if (!airplaneInRange() && projectiles.isEmpty()){
             setHasFinished(true);
+        }
+    }
+
+    /**
+     * @param p position of the airplane
+     * @return a new instance of the airplane class
+     */
+    public Tower newTower(Point p){
+        boolean orientation = ShadowDefend.getAirplaneIsVertical();
+        if (!orientation){
+            return new Airplane(new Point(0,p.y));
+        }else{
+            return new Airplane(new Point(p.x,0));
         }
     }
 }

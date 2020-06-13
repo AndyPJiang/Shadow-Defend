@@ -1,36 +1,31 @@
-import bagel.*;
+import bagel.Input;
 import bagel.util.Point;
 import java.util.List;
 
-/**
- * Tank Defence
- */
-public class Tank extends Tower{
-    private static final String NAME = "tank";
-    private static final double RADIUS = 100;
-    private static final int DAMAGE = 1;
-    private static final double COOL_DOWN = 1;
-    private static final int TANK_PRICE = 250;
 
-
+public class SuperTank extends Tower{
+    private static final String NAME = "supertank";
+    private static final double RADIUS = 150;
+    private static final int DAMAGE = 3;
+    private static final double COOL_DOWN = 0.5;
+    private static final int SUPER_TANK_PRICE = 600;
     private double frameCount = Integer.MAX_VALUE;
     private final String projectileFile;
-
     /**
-     * Creates a new tank
+     * Creates a new supertank
      * @param p position of the tank
      */
-    public Tank(Point p){
-        super(p,ShadowDefend.getImgPath()+NAME+".png",RADIUS,DAMAGE,NAME,TANK_PRICE);
+    public SuperTank(Point p){
+        super(p,ShadowDefend.getImgPath()+NAME+".png", RADIUS,DAMAGE,NAME,SUPER_TANK_PRICE);
         projectileFile = ShadowDefend.getImgPath()+NAME+"_projectile.png";
     }
 
 
     /**
-     * @return the tank price
+     * @return the supertank price
      */
     public static int getPrice() {
-        return TANK_PRICE;
+        return SUPER_TANK_PRICE;
     }
 
     /**
@@ -54,11 +49,12 @@ public class Tank extends Tower{
         super.updateProjectiles(input);
     }
 
+
     /**
      * @param p position of the tower
-     * @return a new instance of the tank class
+     * @return a new instance of the supertank class
      */
     public Tower newTower(Point p){
-        return new Tank(p);
+        return new SuperTank(p);
     }
 }

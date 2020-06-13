@@ -3,10 +3,10 @@
  */
 
 public class SpawnEvent extends Event{
-    private final String enemyType;
+    private final String slicerType;
     private final int totalSpawnNum;
     private boolean hasStarted = false;
-    private int spawnNum = 0;
+    private int spawnCount = 0;
 
     /**
      * Create a new spawn event
@@ -16,30 +16,32 @@ public class SpawnEvent extends Event{
     public SpawnEvent(String[] parts){
         super(parts[4],parts[0]);
         this.totalSpawnNum = Integer.parseInt(parts[2]);
-        enemyType = parts[3];
+        slicerType = parts[3];
     }
 
     /**
      * process the event, spawn slicers after time delay
      */
     public void runEvent(){
+        // always spawn 1 slicer after each time delay interval
+        int numberToSpawn = 1;
         if (!hasStarted){
             // spawn the first slicer
-            ShadowDefend.addSlicer(enemyType,1);
+            ShadowDefend.addSlicer(slicerType,numberToSpawn);
             hasStarted = true;
-            spawnNum++;
+            spawnCount++;
         }
         if (!getIsFinished()){
             increaseFrameCount(ShadowDefend.getTimescale());
             if (getFrameCount()/ShadowDefend.getFPS() >= getDelay()){
                 // spawn a slicer with a constant delay
-                ShadowDefend.addSlicer(enemyType,1);
+                ShadowDefend.addSlicer(slicerType,1);
                 setFrameCount(0.0);
-                spawnNum++;
-                if (spawnNum>=totalSpawnNum){
+                spawnCount++;
+                if (spawnCount>=totalSpawnNum){
                     // all slicers have been spawn, set flag
                     this.setIsFinished(true);
-                    spawnNum = 0;
+                    spawnCount = 0;
                 }
             }
         }

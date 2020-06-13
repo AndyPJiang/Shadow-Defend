@@ -58,9 +58,9 @@ public class BuyPanel implements Panel{
         tankCenter = new Point(OFFSET_X,center-OFFSET_Y);
         superTankCenter = new Point(OFFSET_X+GAP,center-OFFSET_Y);
         airplaneCenter= new Point(OFFSET_X + 2 * GAP,center- OFFSET_Y);
-        this.tankPrice = ShadowDefend.getTankPrice();
-        this.superTankPrice = ShadowDefend.getSuperTankPrice();
-        this.airplanePrice = ShadowDefend.getAirplanePrice();
+        this.tankPrice = Tank.getPrice();
+        this.superTankPrice = SuperTank.getPrice();
+        this.airplanePrice = Airplane.getPrice();
     }
 
 

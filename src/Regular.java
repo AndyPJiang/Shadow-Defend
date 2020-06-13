@@ -5,6 +5,7 @@ import java.util.List;
  * A regular slicer
  */
 public class Regular extends Slicer{
+    private static final String NAME = "slicer";
     private static final double SPEED = 2;
     private static final int HEALTH = 1;
     private static final int REWARD = 2;
@@ -15,7 +16,7 @@ public class Regular extends Slicer{
      * @param polyline The polyline that the slicer must traverse
      */
     public Regular(List<Point> polyline){
-        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
+        super(polyline, NAME, SPEED, HEALTH, REWARD, PENALTY,
                 ShadowDefend.getImgPath()+"slicer.png");
     }
 
@@ -28,7 +29,7 @@ public class Regular extends Slicer{
      * @param targetInd the point in polyline that we are targeting
      */
     public Regular(List<Point> polyline,Point start, int targetInd){
-        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
+        super(polyline, NAME, SPEED, HEALTH, REWARD, PENALTY,
                 ShadowDefend.getImgPath()+"slicer.png",start,targetInd);
     }
 
@@ -38,4 +39,12 @@ public class Regular extends Slicer{
      * any child slicers on elimination thus the function is empty.
      */
     public void spawnOnDeath(){}
+
+    /**
+     * @param polyline The polyline that the slicer must traverse
+     * @return new a new regular slicer
+     */
+    public Slicer newSlicer(List<Point> polyline){
+        return new Regular(polyline);
+    }
 }

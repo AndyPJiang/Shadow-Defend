@@ -12,7 +12,9 @@ public abstract class Tower extends Sprite{
     private final int damage;
     private final List<Projectile> projectiles;
     private final String name;
+    private final int price;
     private boolean hasFinished = false;
+
 
     /**
      * Create a new tower
@@ -22,12 +24,13 @@ public abstract class Tower extends Sprite{
      * @param damage the damage the tower does to a slicer
      * @param name the type of tower as a string
      */
-    public Tower(Point p, String imageFile, double radius, int damage, String name) {
+    public Tower(Point p, String imageFile, double radius, int damage, String name, int price) {
         super(p,imageFile);
         this.radius = radius;
         this.damage = damage;
         this.projectiles = new ArrayList<>();
         this.name = name;
+        this.price = price;
     }
 
     /**
@@ -35,6 +38,15 @@ public abstract class Tower extends Sprite{
      * @param input The current mouse/keyboard state
      */
     public abstract void attack(Input input);
+
+
+    /**
+     * @param p position of the tower
+     * @return abstract method to return a new instance of the class
+     */
+    public abstract Tower newTower(Point p);
+
+
 
     /**
      * @return the radius of the tower
@@ -91,6 +103,13 @@ public abstract class Tower extends Sprite{
     }
 
     /**
+     * @return price to purchase the tower
+     */
+    public int getTowerPrice() {
+        return price;
+    }
+
+    /**
      * Update the position of all the tower's projectiles.
      * @param input The current mouse/keyboard state
      */
@@ -102,6 +121,13 @@ public abstract class Tower extends Sprite{
                 projectiles.remove(i);
             }
         }
+    }
+
+    /**
+     * @return name of tower as a string
+     */
+    public String getName() {
+        return name;
     }
 
     /**
@@ -119,5 +145,4 @@ public abstract class Tower extends Sprite{
         }
         return targets;
     }
-
 }

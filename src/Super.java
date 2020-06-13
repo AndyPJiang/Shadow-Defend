@@ -7,6 +7,7 @@ import java.util.List;
  */
 
 public class Super extends Slicer {
+    private static final String NAME = "superslicer";
     private static final double SPEED = 1.5;
     private static final int HEALTH = 1;
     private static final int REWARD = 15;
@@ -16,7 +17,7 @@ public class Super extends Slicer {
      * @param polyline The polyline that the slicer must traverse
      */
     public Super(List<Point> polyline){
-        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
+        super(polyline,NAME,SPEED, HEALTH, REWARD, PENALTY,
                 ShadowDefend.getImgPath()+"superslicer.png");
     }
 
@@ -29,7 +30,7 @@ public class Super extends Slicer {
      * @param targetInd the point in polyline that we are targeting
      */
     public Super(List<Point> polyline,Point start, int targetInd){
-        super(polyline,SPEED, HEALTH, REWARD, PENALTY,
+        super(polyline,NAME,SPEED, HEALTH, REWARD, PENALTY,
                 ShadowDefend.getImgPath()+"superslicer.png",start,targetInd);
     }
 
@@ -49,4 +50,14 @@ public class Super extends Slicer {
         }
         ShadowDefend.addSlicer(newSlicers);
     }
+
+    /**
+     * @param polyline The polyline that the slicer must traverse
+     * @return new a new super slicer
+     */
+    public Slicer newSlicer(List<Point> polyline){
+        return new Super(polyline);
+    }
+
+
 }

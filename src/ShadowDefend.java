@@ -20,13 +20,13 @@ public class ShadowDefend extends AbstractGame {
 
     // game presets
     private static final double INIT_TIMESCALE = 1;
-    private static final double MAX_TIMESCALE = 5;
+    private static final double MAX_TIMESCALE = 20;
     private static final int INIT_MONEY = 500;
     private static final int INIT_WAVENUM = 1;
     private static final int INIT_LIVES = 25;
     private static final int INIT_LEVEL = 1;
     private static final String INIT_STATUS = "Awaiting Start";
-    private static final boolean INIT_PLANE_ORIENTATION = false;
+    private static final boolean INIT_PLANE_ORIENTATION = true;
 
     // initialise variables to game presets
     private static int level = INIT_LEVEL;
@@ -41,13 +41,14 @@ public class ShadowDefend extends AbstractGame {
     private static final List<Slicer> slicers = new ArrayList<>();
     // stores all towers that are currently in game
     private static final List<Tower> towers = new ArrayList<>();
+    // a list of all tower types in the game
+    private static final List<Tower> allTowers = new ArrayList<>();
+    private static final List<Slicer> allSlicers = new ArrayList<>();
+
+
     private static TiledMap map;
     private static List<Point> polyline;
 
-    // price of each tower
-    private static final int tankPrice = 250;
-    private static final int superTankPrice = 600;
-    private static final int airplanePrice = 500;
 
     // reward at end of each wave event
     private final int ENDWAVE_REWARD_SCALE = 100;
@@ -78,6 +79,15 @@ public class ShadowDefend extends AbstractGame {
         this.buyPanel = BuyPanel.getInstance();
         // push to the top of the stack the initial game status
         status.add(INIT_STATUS);
+
+        // add an instance of all the tower and slicer types
+        allTowers.add(new Tank(new Point(0,0)));
+        allTowers.add(new SuperTank(new Point(0,0)));
+        allTowers.add(new Airplane(new Point(0,0)));
+        allSlicers.add(new Regular(polyline));
+        allSlicers.add(new Super(polyline));
+        allSlicers.add(new Mega(polyline));
+        allSlicers.add(new Apex(polyline));
     }
 
     /**
@@ -96,27 +106,17 @@ public class ShadowDefend extends AbstractGame {
      * @param num the number of slicers to spawn
      */
     public static void addSlicer(String slicerType, int num){
-        if (slicerType.equals("slicer")){
-            for (int i=0;i<num;i++){
-                slicers.add(new Regular(polyline));
-            }
-        }else if (slicerType.equals("superslicer")){
-            for (int i=0;i<num;i++){
-                slicers.add(new Super(polyline));
-            }
-        }else if (slicerType.equals("megaslicer")){
-            for (int i=0;i<num;i++){
-                slicers.add(new Mega(polyline));
-            }
-        }else{
-            for (int i=0;i<num;i++){
-                slicers.add(new Apex(polyline));
+        for (Slicer s : allSlicers){
+            if (slicerType.equals(s.getName())){
+                for (int i=0;i<num;i++){
+                    slicers.add(s.newSlicer(polyline));
+                }
             }
         }
     }
 
     /**
-     * add new slicers to the game
+     * add new slicers to the game. This method is used when spawning child slicers on elimination
      * @param newSlicers a list a slicers to add
      */
     public static void addSlicer(List<Slicer> newSlicers){
@@ -129,20 +129,11 @@ public class ShadowDefend extends AbstractGame {
      * @param p the position to place the tower at
      */
     public static void addTower(String towerType, Point p){
-        if (towerType.equals("tank")){
-            towers.add(new Tank(p,"tank",100,1,1));
-            addMoney(-tankPrice);
-        }else if (towerType.equals("supertank")){
-            towers.add(new Tank(p,"supertank",150,0.5,3));
-            addMoney(-superTankPrice);
-        }else{
-            if (airplaneIsVertical){
-                towers.add(new Airplane(new Point(p.x,0),true));
-            }else{
-                towers.add(new Airplane(new Point(0,p.y),false));
+        for (Tower t : allTowers){
+            if (towerType.equals(t.getName())){
+                towers.add(t.newTower(p));
+                subtractMoney(t.getTowerPrice());
             }
-            airplaneIsVertical = !airplaneIsVertical;
-            addMoney(-airplanePrice);
         }
     }
 
@@ -182,24 +173,6 @@ public class ShadowDefend extends AbstractGame {
     public static int getWaveNum() {
         return waveNum;
     }
-    /**
-     * @return the price of a tank
-     */
-    public static int getTankPrice() {
-        return tankPrice;
-    }
-    /**
-     * @return the price of a supertank
-     */
-    public static int getSuperTankPrice() {
-        return superTankPrice;
-    }
-    /**
-     * @return the price of airsupport
-     */
-    public static int getAirplanePrice() {
-        return airplanePrice;
-    }
 
     /**
      * @return the number of lives
@@ -231,11 +204,19 @@ public class ShadowDefend extends AbstractGame {
     }
 
     /**
-     * Update money
+     * Add money
      * @param mon amount of money to add
      */
     public static void addMoney(int mon) {
         money += mon;
+    }
+
+    /**
+     * Subtract money
+     * @param mon amount of money to subtract
+     */
+    public static void subtractMoney(int mon) {
+        money -= mon;
     }
 
     /**
@@ -319,7 +300,20 @@ public class ShadowDefend extends AbstractGame {
         return WIDTH;
     }
 
+    /**
+     * @return is airplane orientation is vertical
+     */
+    public static boolean getAirplaneIsVertical() {
+        return airplaneIsVertical;
+    }
 
+    /**
+     * Set new airplane orientation
+     * @param airplaneIsVertical new airplane orientation
+     */
+    public static void setAirplaneIsVertical(boolean airplaneIsVertical) {
+        ShadowDefend.airplaneIsVertical = airplaneIsVertical;
+    }
     /**
      * Update the state of the game, potentially reading from input
      * @param input The current mouse/keyboard state
@@ -367,7 +361,6 @@ public class ShadowDefend extends AbstractGame {
                 isBuying = false;
             }
         }
-
 
         // If in the process of buying
         if (isBuying){
