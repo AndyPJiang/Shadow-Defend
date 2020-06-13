@@ -11,8 +11,6 @@ public class Tank extends Tower{
     private static final int DAMAGE = 1;
     private static final double COOL_DOWN = 1;
     private static final int TANK_PRICE = 250;
-
-
     private double frameCount = Integer.MAX_VALUE;
     private final String projectileFile;
 
@@ -22,7 +20,7 @@ public class Tank extends Tower{
      */
     public Tank(Point p){
         super(p,ShadowDefend.getImgPath()+NAME+".png",RADIUS,DAMAGE,NAME,TANK_PRICE);
-        projectileFile = ShadowDefend.getImgPath()+NAME+"_projectile.png";
+        this.projectileFile = ShadowDefend.getImgPath()+NAME+"_projectile.png";
     }
 
 

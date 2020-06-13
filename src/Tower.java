@@ -15,7 +15,6 @@ public abstract class Tower extends Sprite{
     private final int price;
     private boolean hasFinished = false;
 
-
     /**
      * Create a new tower
      * @param p position of the tower

@@ -14,7 +14,6 @@ public class Airplane extends Tower{
     private static final int DAMAGE = 500;
     private static final int PLANE_PRICE = 500;
 
-
     // maximum and minimum time to wait between successive drops
     private final int MAX_DROP_TIME = 2;
     private final int MIN_DROP_TIME = 1;
@@ -24,7 +23,6 @@ public class Airplane extends Tower{
     private double frameCount = 0.0;
     private final double windowWidth;
     private final double windowHeight;
-
 
     /**
      * creates a new airplane

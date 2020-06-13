@@ -59,5 +59,4 @@ public class Super extends Slicer {
         return new Super(polyline);
     }
 
-
 }

@@ -17,7 +17,7 @@ public class SuperTank extends Tower{
      */
     public SuperTank(Point p){
         super(p,ShadowDefend.getImgPath()+NAME+".png", RADIUS,DAMAGE,NAME,SUPER_TANK_PRICE);
-        projectileFile = ShadowDefend.getImgPath()+NAME+"_projectile.png";
+        this.projectileFile = ShadowDefend.getImgPath()+NAME+"_projectile.png";
     }
 
 

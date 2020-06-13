@@ -23,14 +23,6 @@ public class BuyPanel implements Panel{
     private final double center;
     private final double width;
 
-    // some parameters for rendering
-    private final int OFFSET_X = 64;
-    private final int OFFSET_Y = 10;
-    private final int OFFSET_KEYBIND = 25;
-    private final int OFFSET_MONEY = 200;
-    private final int OFFSET_Y_MONEY = 65;
-    private final int GAP = 120;
-
     // position where these tower images will be rendered
     private final Point tankCenter;
     private final Point superTankCenter;
@@ -54,10 +46,15 @@ public class BuyPanel implements Panel{
         center = background.getHeight()/2;
         width = background.getWidth();
 
+        // some parameters for rendering
+        int offsetX = 64;
+        int offsetY = 10;
+        int gap = 120;
+
         // calculate the centers of each tower image
-        tankCenter = new Point(OFFSET_X,center-OFFSET_Y);
-        superTankCenter = new Point(OFFSET_X+GAP,center-OFFSET_Y);
-        airplaneCenter= new Point(OFFSET_X + 2 * GAP,center- OFFSET_Y);
+        tankCenter = new Point(offsetX,center-offsetY);
+        superTankCenter = new Point(offsetX+gap,center-offsetY);
+        airplaneCenter= new Point(offsetX + 2 * gap,center- offsetY);
         this.tankPrice = Tank.getPrice();
         this.superTankPrice = SuperTank.getPrice();
         this.airplanePrice = Airplane.getPrice();
@@ -72,12 +69,17 @@ public class BuyPanel implements Panel{
         String fontFile = "DejaVuSans-Bold.ttf";
         Font font = new Font(fontPath+fontFile,mediumFont);
 
+        //some parameters for rendering
         double tankWidth = tankImg.getWidth();
         double superTankWidth = superTankImg.getWidth();
         double airplaneWidth = airplaneImg.getWidth();
+        int offsetKeyBind = 25;
+        int offsetMoney = 200;
+        int offsetYMoney = 65;
 
         // draw the background
         background.drawFromTopLeft(0,0);
+
         // draw the tower images
         tankImg.draw(tankCenter.x,tankCenter.y);
         superTankImg.draw(superTankCenter.x,superTankCenter.y);
@@ -111,19 +113,18 @@ public class BuyPanel implements Panel{
         Font fontKeyBind = new Font(fontPath+fontFile,smallFont);
         fontKeyBind.drawString(
                 "Key binds:\n\nS - Start Wave\nL - Increase Timescale\nK - Decrease Timescale",
-                width/2-fontKeyBind.getWidth("Key binds"), center-OFFSET_KEYBIND);
-
+                width/2-fontKeyBind.getWidth("Key binds"), center-offsetKeyBind);
 
         // draw the money that the player has
         Font fontMoney = new Font(fontPath+fontFile,largeFont);
         fontMoney.drawString("$"+ShadowDefend.getMoney(),
-                width-OFFSET_MONEY, OFFSET_Y_MONEY);
+                width-offsetMoney, offsetYMoney);
     }
 
 
 
     /**
-     * Gets the type of tower that the user clicked on to purchase, if the player
+     * Gets the type of tower that the user clicked on to purchase if the player
      * has enough money to buy it
      * @param input The current mouse/keyboard state
      * @return returns the tower type as a string if one was clicked, otherwise an empty string
