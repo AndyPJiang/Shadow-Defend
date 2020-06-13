@@ -10,6 +10,8 @@ import java.util.List;
 
 public class Airplane extends Tower{
     private final double SPEED = 3;
+    private final int MAX_DROP_TIME = 2;
+    private final int MIN_DROP_TIME = 1;
     // how long to wait to drop the next explosive
     private double dropTime;
     private final boolean isVertical;
@@ -27,7 +29,7 @@ public class Airplane extends Tower{
         super(p,ShadowDefend.getImgPath()+"airsupport.png",
                 200,500,"airsupport");
         // randomly choose drop time between 0 and 3 seconds
-        dropTime = Math.random() * 3;
+        dropTime = Math.random() * (MAX_DROP_TIME-MIN_DROP_TIME) + MIN_DROP_TIME;
         this.isVertical = isVertical;
         windowWidth = ShadowDefend.getWidth();
         windowHeight = ShadowDefend.getHeight();
@@ -43,11 +45,11 @@ public class Airplane extends Tower{
         if (frameCount/ShadowDefend.getFPS()>=dropTime && airplaneInRange()){
             // create a new explosive if wait time is over
             addProjectile(new Explosive(getCenter()));
-            // randomly choose drop time between 0 and 3 seconds again
-            dropTime = Math.random() * 3;
+            // randomly choose drop time between 1 and 2 seconds again
+            dropTime = Math.random() * (MAX_DROP_TIME-MIN_DROP_TIME) + MIN_DROP_TIME;
             frameCount = 0.0;
         }
-
+        System.out.println(dropTime);
         // update each explosive
         super.updateProjectiles(input);
     }
