@@ -20,13 +20,13 @@ public class ShadowDefend extends AbstractGame {
 
     // game presets
     private static final double INIT_TIMESCALE = 1;
-    private static final double MAX_TIMESCALE = 20;
+    private static final double MAX_TIMESCALE = 5;
     private static final int INIT_MONEY = 500;
     private static final int INIT_WAVENUM = 1;
     private static final int INIT_LIVES = 25;
     private static final int INIT_LEVEL = 1;
     private static final String INIT_STATUS = "Awaiting Start";
-    private static final boolean INIT_PLANE_ORIENTATION = true;
+    private static final boolean INIT_PLANE_ORIENTATION = false;
 
     // initialise variables to game presets
     private static int level = INIT_LEVEL;
@@ -44,7 +44,6 @@ public class ShadowDefend extends AbstractGame {
     // a list of all tower types in the game
     private static final List<Tower> allTowers = new ArrayList<>();
     private static final List<Slicer> allSlicers = new ArrayList<>();
-
 
     private static TiledMap map;
     private static List<Point> polyline;

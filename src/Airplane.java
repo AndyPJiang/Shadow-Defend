@@ -36,7 +36,6 @@ public class Airplane extends Tower{
         // randomly choose drop time between 0 and 3 seconds
         dropTime = Math.random() * (MAX_DROP_TIME-MIN_DROP_TIME) + MIN_DROP_TIME;
         this.isVertical = ShadowDefend.getAirplaneIsVertical();
-        ShadowDefend.setAirplaneIsVertical(!this.isVertical);
         windowWidth = ShadowDefend.getWidth();
         windowHeight = ShadowDefend.getHeight();
     }
@@ -112,10 +111,18 @@ public class Airplane extends Tower{
      */
     public Tower newTower(Point p){
         boolean orientation = ShadowDefend.getAirplaneIsVertical();
+        // spawn airplane outside of window
+        int start = -100;
+        Airplane plane;
+
         if (!orientation){
-            return new Airplane(new Point(0,p.y));
+            plane = new Airplane(new Point(start,p.y));
         }else{
-            return new Airplane(new Point(p.x,0));
+            plane = new Airplane(new Point(p.x,start));
         }
+
+        // alternate between flight directions
+        ShadowDefend.setAirplaneIsVertical(!orientation);
+        return plane;
     }
 }
