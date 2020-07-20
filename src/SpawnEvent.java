@@ -19,6 +19,7 @@ public class SpawnEvent extends Event{
         slicerType = parts[3];
     }
 
+
     /**
      * process the event, spawn slicers after time delay
      */
@@ -38,12 +39,12 @@ public class SpawnEvent extends Event{
                 ShadowDefend.addSlicer(slicerType,1);
                 setFrameCount(0.0);
                 spawnCount++;
-                if (spawnCount>=totalSpawnNum){
-                    // all slicers have been spawn, set flag
-                    this.setIsFinished(true);
-                    spawnCount = 0;
-                }
             }
+        }
+        if (spawnCount>=totalSpawnNum){
+            // all slicers have been spawn, set flag
+            this.setIsFinished(true);
+            spawnCount = 0;
         }
 
     }
